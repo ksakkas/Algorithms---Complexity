@@ -3,29 +3,17 @@
 #include <sstream>
 #include <vector>
 #include <set>
+#include <algorithm>
+#include <list>
+#include <numeric>
+#include <iomanip>
+#include <cmath>
+#include <ctime>
 
 using namespace std;
 
-int count_common_elements(set<int> s1, set<int> s2)
-{
-    int c = 0;
-    for (int x : s1) // range based for
-    {
-        for (int y : s2)
-        {
-            if (x == y)
-            {
-                c++;
-                break;
-            }
-        }
-    }
-    return c;
-}
-
 void read_data(string fn, int students, int exams)
 {
-    // ανάγνωση δεδομένων
     vector<set<int>> exam_students(exams + 1);
     fstream fs(fn);
     if (!fs.is_open())
@@ -61,49 +49,14 @@ void read_data(string fn, int students, int exams)
         }
         cout << endl;
     }
-
-    // δημιουργία πίνακα γειτνίασης
-    cout << "Adjacency Matrix" << endl;
-    int *adj_matrix = new int[exams * exams];
-    for (int i = 0; i < exams; i++)
-    {
-        for (int j = 0; j < exams; j++)
-        {
-            if (i == j){
-                adj_matrix[i * exams + j] = 0; // adj_matrix[i][j]
-                continue;
-            }
-            int c = count_common_elements(exam_students[i + 1], exam_students[j + 1]);
-            if (c > 0)
-                cout << i + 1 << " " << j + 1 << " " << c << endl;
-            adj_matrix[i * exams + j] = c;
-        }
-    }
-
-    // Υπολογισμός συντελεστή πυκνότητας
-    int c = 0;
-    for (int i = 0; i < exams; i++)
-    {
-        for (int j = 0; j < exams; j++)
-        {
-            if (adj_matrix[i * exams + j] > 0)
-            {
-                c++;
-            }
-        }
-    }
-
-    double cd = double(c) / double(exams * exams);
-    cout << "Conflict Density: " << cd << endl;
-
-    delete[] adj_matrix;
 }
+
+
 
 int main()
 {
     int a;
-    cout << "Read Data:"<<endl;
-    cout << "Give number:" << endl;
+    cout << "*******Read Data:*******" << endl;
     cout << "1: car-f-92.stu" << endl;
     cout << "2: car-s-91.stu" << endl;
     cout << "3: ear-f-83.stu" << endl;
@@ -117,59 +70,61 @@ int main()
     cout << "11: uta-s-92.stu" << endl;
     cout << "12: ute-s-92.stu" << endl;
     cout << "13: yor-f-83.stu" << endl;
- 
+    cout << endl;
+    cout << "Give number:  " ;
+
     cin >> a;
-    
-    if(a == 1)
+
+    if (a == 1)
     {
         read_data("../datasets/car_f_92.stu", 18419, 543);
     }
-    else if(a == 2)
+    else if (a == 2)
     {
         read_data("../datasets/car_s_91.stu", 16925, 682);
     }
-    else if(a == 3)
+    else if (a == 3)
     {
         read_data("../datasets/ear_f_83.stu", 1125, 190);
     }
-    else if(a == 4)
+    else if (a == 4)
     {
         read_data("../datasets/hec_s_92.stu", 2823, 81);
     }
-    else if(a == 5)
+    else if (a == 5)
     {
         read_data("../datasets/kfu_s_93.stu", 5349, 461);
     }
-    else if(a == 6)
+    else if (a == 6)
     {
         read_data("../datasets/lse_f_91.stu", 2726, 381);
     }
-    else if(a == 7)
+    else if (a == 7)
     {
         read_data("../datasets/pur_s_93.stu", 30029, 2419);
     }
-    else if(a == 8)
+    else if (a == 8)
     {
         read_data("../datasets/rye_s_93.stu", 11483, 486);
     }
-    else if(a == 9)
+    else if (a == 9)
     {
         read_data("../datasets/sta_f_83.stu", 611, 139);
     }
-    else if(a == 10)
+    else if (a == 10)
     {
         read_data("../datasets/tre_s_92.stu", 4360, 261);
     }
-    else if(a == 11)
+    else if (a == 11)
     {
         read_data("../datasets/uta_s_92.stu", 21266, 622);
     }
-    else if(a == 12)
+    else if (a == 12)
     {
         read_data("../datasets/ute_s_92.stu", 2749, 184);
     }
-    else if(a == 13)
+    else if (a == 13)
     {
         read_data("../datasets/yor_f_83.stu", 941, 181);
     }
-}   
+}
